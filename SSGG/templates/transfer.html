@@ -1,0 +1,174 @@
+{% extends "base.html" %}
+
+{% block title %}SSGG Bank LMT - Transfer Money{% endblock %}
+
+{% block content %}
+<main class="py-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-4 mb-4">
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <h3 class="h5 mb-4">Account Summary</h3>
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <span class="text-muted">Available Balance</span>
+              <h4 class="mb-0 text-primary">₹0.00</h4>
+            </div>
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <span class="text-muted">Account Number</span>
+              <span>XXXX XXXX 1234</span>
+            </div>
+            <div class="d-flex justify-content-between align-items-center">
+              <span class="text-muted">IFSC Code</span>
+              <span>SSGG0001234</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card shadow-sm mt-4">
+          <div class="card-body">
+            <h3 class="h5 mb-4">Quick Transfer</h3>
+            <div class="row g-2">
+              <div class="col-4">
+                <div class="text-center">
+                  <button class="btn btn-light rounded-circle p-3 mb-2">
+                    <i class="bi bi-person-plus"></i>
+                  </button>
+                  <p class="small mb-0">Add New</p>
+                </div>
+              </div>
+              <div class="col-4">
+                <div class="text-center">
+                  <button class="btn btn-light rounded-circle p-3 mb-2">
+                    <i class="bi bi-phone"></i>
+                  </button>
+                  <p class="small mb-0">UPI</p>
+                </div>
+              </div>
+              <div class="col-4">
+                <div class="text-center">
+                  <button class="btn btn-light rounded-circle p-3 mb-2">
+                    <i class="bi bi-clock-history"></i>
+                  </button>
+                  <p class="small mb-0">History</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-8">
+        <div class="card shadow-sm">
+          <div class="card-body p-4">
+            <ul class="nav nav-pills mb-4" id="transferTab" role="tablist">
+              <li class="nav-item" role="presentation">
+                <button class="nav-link active" data-bs-toggle="pill" data-bs-target="#bankTransfer">
+                  <i class="bi bi-bank me-2"></i>Bank Transfer
+                </button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link" data-bs-toggle="pill" data-bs-target="#upiTransfer">
+                  <i class="bi bi-phone me-2"></i>UPI Transfer
+                </button>
+              </li>
+            </ul>
+
+            <div class="tab-content" id="transferTabContent">
+              <div class="tab-pane fade show active" id="bankTransfer">
+                <form>
+                  <div class="mb-4">
+                    <label class="form-label">Recipient's Account Number</label>
+                    <input type="text" class="form-control" placeholder="Enter account number">
+                  </div>
+                  <div class="mb-4">
+                    <label class="form-label">IFSC Code</label>
+                    <input type="text" class="form-control" placeholder="Enter IFSC code">
+                  </div>
+                  <div class="mb-4">
+                    <label class="form-label">Amount</label>
+                    <div class="input-group">
+                      <span class="input-group-text">₹</span>
+                      <input type="number" class="form-control" placeholder="Enter amount">
+                    </div>
+                  </div>
+                  <div class="mb-4">
+                    <label class="form-label">Remarks</label>
+                    <input type="text" class="form-control" placeholder="Add a note">
+                  </div>
+                  <div class="d-grid">
+                    <button type="submit" class="btn btn-primary">Transfer Money</button>
+                  </div>
+                </form>
+              </div>
+
+              <!-- UPI Transfer -->
+              <div class="tab-pane fade" id="upiTransfer">
+                <form>
+                  <div class="mb-4">
+                    <label class="form-label">UPI ID</label>
+                    <input type="text" class="form-control" placeholder="Enter UPI ID">
+                  </div>
+                  <div class="mb-4">
+                    <label class="form-label">Amount</label>
+                    <div class="input-group">
+                      <span class="input-group-text">₹</span>
+                      <input type="number" class="form-control" placeholder="Enter amount">
+                    </div>
+                  </div>
+                  <div class="mb-4">
+                    <label class="form-label">Remarks</label>
+                    <input type="text" class="form-control" placeholder="Add a note">
+                  </div>
+                  <div class="d-grid">
+                    <button type="submit" class="btn btn-primary">Pay Now</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent Transactions -->
+        <div class="card shadow-sm mt-4">
+          <div class="card-body">
+            <h3 class="h5 mb-4">Recent Transactions</h3>
+            <div class="table-responsive">
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Description</th>
+                    <th>Type</th>
+                    <th class="text-end">Amount</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>2023-07-15</td>
+                    <td>Salary Credit</td>
+                    <td><span class="badge bg-success">Credit</span></td>
+                    <td class="text-end text-success">+₹45,000</td>
+                  </tr>
+                  <tr>
+                    <td>2023-07-14</td>
+                    <td>Electricity Bill</td>
+                    <td><span class="badge bg-danger">Debit</span></td>
+                    <td class="text-end text-danger">-₹2,500</td>
+                  </tr>
+                  <tr>
+                    <td>2023-07-13</td>
+                    <td>Rent Payment</td>
+                    <td><span class="badge bg-danger">Debit</span></td>
+                    <td class="text-end text-danger">-₹15,000</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+{% endblock %}

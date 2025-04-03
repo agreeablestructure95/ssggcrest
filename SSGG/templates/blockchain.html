@@ -1,0 +1,233 @@
+{% extends "base.html" %}
+
+{% block title %}SSGG Bank LMT - Blockchain{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <!-- Blockchain Overview -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body">
+                    <h4 class="card-title mb-4">
+                        <i class="bi bi-boxes text-primary me-2"></i>Blockchain Overview
+                    </h4>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="text-center p-3">
+                                <div class="display-6 text-primary mb-2">
+                                    <i class="bi bi-box"></i>
+                                </div>
+                                <h6 class="mb-1">Latest Block</h6>
+                                <p class="small text-muted mb-0">{{ data.latest_block.hash }}</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="text-center p-3">
+                                <div class="display-6 text-primary mb-2">
+                                    <i class="bi bi-clock-history"></i>
+                                </div>
+                                <h6 class="mb-1">Last Updated</h6>
+                                <p class="small text-muted mb-0">{{ data.latest_block.timestamp.strftime('%I:%M %p') }}</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="text-center p-3">
+                                <div class="display-6 text-primary mb-2">
+                                    <i class="bi bi-arrow-left-right"></i>
+                                </div>
+                                <h6 class="mb-1">Transactions</h6>
+                                <p class="small text-muted mb-0">{{ data.latest_block.transactions }}</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="text-center p-3">
+                                <div class="display-6 text-primary mb-2">
+                                    <i class="bi bi-file-earmark-code"></i>
+                                </div>
+                                <h6 class="mb-1">Smart Contracts</h6>
+                                <p class="small text-muted mb-0">{{ data.latest_block.smart_contracts }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <!-- Smart Contracts -->
+        <div class="col-lg-8">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-header bg-transparent border-0">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">
+                            <i class="bi bi-file-earmark-code text-primary me-2"></i>Smart Contracts
+                        </h5>
+                        <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#deployContractModal">
+                            <i class="bi bi-plus-lg me-1"></i>Deploy New
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover mb-0">
+                            <thead class="bg-light">
+                                <tr>
+                                    <th class="border-0">Name</th>
+                                    <th class="border-0">Address</th>
+                                    <th class="border-0">Type</th>
+                                    <th class="border-0">Status</th>
+                                    <th class="border-0">Transactions</th>
+                                    <th class="border-0">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for contract in data.smart_contracts %}
+                                <tr>
+                                    <td>{{ contract.name }}</td>
+                                    <td><code>{{ contract.address }}</code></td>
+                                    <td>{{ contract.type }}</td>
+                                    <td>
+                                        <span class="badge bg-success">{{ contract.status }}</span>
+                                    </td>
+                                    <td>{{ contract.transactions }}</td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-primary" onclick="blockchainApp.viewContract('{{ contract.address }}')">
+                                            <i class="bi bi-eye"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Transactions -->
+        <div class="col-lg-4">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-header bg-transparent border-0">
+                    <h5 class="mb-0">
+                        <i class="bi bi-clock-history text-primary me-2"></i>Recent Transactions
+                    </h5>
+                </div>
+                <div class="card-body p-0">
+                    <div class="list-group list-group-flush">
+                        {% for tx in data.recent_transactions %}
+                        <div class="list-group-item border-0">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h6 class="mb-1">{{ tx.type }}</h6>
+                                    <p class="small text-muted mb-0">
+                                        <code>{{ tx.hash }}</code>
+                                    </p>
+                                </div>
+                                <div class="text-end">
+                                    <span class="badge {% if tx.status == 'Confirmed' %}bg-success{% else %}bg-warning{% endif %}">
+                                        {{ tx.status }}
+                                    </span>
+                                    <small class="d-block text-muted">{{ tx.time }}</small>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Deploy Contract Modal -->
+<div class="modal fade" id="deployContractModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Deploy New Smart Contract</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <label class="form-label">Contract Type</label>
+                        <select class="form-select">
+                            <option>Payment Gateway</option>
+                            <option>Loan Management</option>
+                            <option>Investment Pool</option>
+                            <option>Custom Contract</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Contract Name</label>
+                        <input type="text" class="form-control" placeholder="Enter contract name">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Initial Parameters</label>
+                        <textarea class="form-control" rows="4" placeholder="Enter contract parameters in JSON format">
+{
+    "owner": "current_user",
+    "initialSupply": 1000000,
+    "decimals": 18,
+    "symbol": "SSGG"
+}</textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" onclick="blockchainApp.deployContract()">
+                    <i class="bi bi-cloud-upload me-1"></i>Deploy
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Blockchain Scripts -->
+<script>
+(function() {
+    'use strict';
+    
+    var INITIAL_TX_COUNT = parseInt('{{ data.latest_block.transactions }}', 10);
+    
+    var blockchainApp = {
+        txCount: INITIAL_TX_COUNT,
+        viewContract: function(address) {
+            alert('Viewing contract at address: ' + address);
+            // In a real implementation, this would show contract details and interactions
+        },
+        deployContract: function() {
+            // Simulate contract deployment
+            alert('Contract deployment initiated! This would typically take 15-30 seconds on the blockchain.');
+            setTimeout(function() {
+                alert('Contract deployed successfully!');
+                location.reload();
+            }, 2000);
+        },
+        updateTransactionCount: function() {
+            this.txCount = this.txCount + Math.floor(Math.random() * 3);
+            var txElements = document.querySelectorAll('p.small.text-muted.mb-0');
+            var self = this;
+            txElements.forEach(function(el) {
+                if (el.textContent === INITIAL_TX_COUNT.toString()) {
+                    el.textContent = self.txCount.toString();
+                }
+            });
+        },
+        init: function() {
+            setInterval(this.updateTransactionCount.bind(this), 5000);
+        }
+    };
+
+    document.addEventListener('DOMContentLoaded', function() {
+        blockchainApp.init();
+    });
+
+    // Make blockchainApp globally accessible for onclick handlers
+    window.blockchainApp = blockchainApp;
+})();
+</script>
+{% endblock %}

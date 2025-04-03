@@ -1,0 +1,181 @@
+{% extends "base.html" %}
+
+{% block title %}SSGG Bank LMT - Sign Up{% endblock %}
+
+{% block extra_css %}
+<style>
+  .signup-container {
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+  .card {
+    border: none;
+    border-radius: 15px;
+  }
+  .form-control-lg {
+    padding: 1rem 1.25rem;
+  }
+  .btn-lg {
+    padding: 1rem 1.25rem;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Main Content -->
+<main class="py-5">
+  <div class="container signup-container">
+    <div class="row justify-content-center">
+      <div class="col-12">
+        <div class="card shadow-lg">
+          <div class="card-body p-5">
+            <div class="row">
+              <!-- Left Side - Form -->
+              <div class="col-lg-8 border-end">
+                <div class="text-center mb-4">
+                  <i class="bi bi-person-plus-fill display-1 text-primary mb-3"></i>
+                  <h1 class="h3">Create Your Account</h1>
+                  <p class="text-muted">Join SSGG Bank for secure and convenient banking</p>
+                </div>
+
+                {% with messages = get_flashed_messages() %}
+                  {% if messages %}
+                    {% for message in messages %}
+                      <div class="alert alert-danger">{{ message }}</div>
+                    {% endfor %}
+                  {% endif %}
+                {% endwith %}
+
+                <form method="POST" action="{{ url_for('auth.signup') }}">
+                  <!-- Personal Information -->
+                  <div class="mb-4">
+                    <h5 class="mb-3">
+                      <i class="bi bi-person me-2"></i>Personal Information
+                    </h5>
+                    <div class="row g-3">
+                      <div class="col-md-6">
+                        <label class="form-label">First Name</label>
+                        <input type="text" name="first_name" class="form-control form-control-lg" required>
+                      </div>
+                      <div class="col-md-6">
+                        <label class="form-label">Last Name</label>
+                        <input type="text" name="last_name" class="form-control form-control-lg" required>
+                      </div>
+                      <div class="col-md-6">
+                        <label class="form-label">Username</label>
+                        <input type="text" name="username" class="form-control form-control-lg" required>
+                      </div>
+                      <div class="col-md-6">
+                        <label class="form-label">Phone Number</label>
+                        <div class="input-group input-group-lg">
+                          <span class="input-group-text bg-light"><i class="bi bi-phone"></i></span>
+                          <input type="tel" name="phone" class="form-control" required>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Contact Information -->
+                  <div class="mb-4">
+                    <h5 class="mb-3">
+                      <i class="bi bi-envelope me-2"></i>Contact Information
+                    </h5>
+                    <div class="row g-3">
+                      <div class="col-12">
+                        <label class="form-label">Email Address</label>
+                        <div class="input-group input-group-lg">
+                          <span class="input-group-text bg-light"><i class="bi bi-envelope"></i></span>
+                          <input type="email" name="email" class="form-control" required>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <label class="form-label">Password</label>
+                        <div class="input-group input-group-lg">
+                          <span class="input-group-text bg-light"><i class="bi bi-lock"></i></span>
+                          <input type="password" name="password" class="form-control" required>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <label class="form-label">Confirm Password</label>
+                        <div class="input-group input-group-lg">
+                          <span class="input-group-text bg-light"><i class="bi bi-lock-fill"></i></span>
+                          <input type="password" name="confirm_password" class="form-control" required>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Terms and Conditions -->
+                  <div class="mb-4">
+                    <div class="form-check">
+                      <input type="checkbox" class="form-check-input" id="terms" name="terms" required>
+                      <label class="form-check-label" for="terms">
+                        I agree to the <a href="#" class="text-primary">Terms of Service</a> and <a href="#" class="text-primary">Privacy Policy</a>
+                      </label>
+                    </div>
+                  </div>
+
+                  <div class="d-grid">
+                    <button type="submit" class="btn btn-primary btn-lg">
+                      <i class="bi bi-person-plus me-2"></i>Create Account
+                    </button>
+                  </div>
+
+                  <p class="text-center mt-4 mb-0">
+                    Already have an account? 
+                    <a href="{{ url_for('auth.login') }}" class="text-primary text-decoration-none">Login</a>
+                  </p>
+                </form>
+              </div>
+
+              <!-- Right Side - Benefits -->
+              <div class="col-lg-4">
+                <div class="ps-md-4">
+                  <h4 class="mb-4">Account Benefits</h4>
+                  <div class="mb-4">
+                    <div class="d-flex align-items-center mb-3">
+                      <div class="bg-primary bg-opacity-10 p-3 rounded-circle me-3">
+                        <i class="bi bi-shield-check text-primary"></i>
+                      </div>
+                      <div>
+                        <h5 class="mb-1">Secure Banking</h5>
+                        <p class="text-muted mb-0">Bank-grade security for your peace of mind</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="mb-4">
+                    <div class="d-flex align-items-center mb-3">
+                      <div class="bg-success bg-opacity-10 p-3 rounded-circle me-3">
+                        <i class="bi bi-phone text-success"></i>
+                      </div>
+                      <div>
+                        <h5 class="mb-1">Mobile Banking</h5>
+                        <p class="text-muted mb-0">Bank on the go with our mobile app</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="mb-4">
+                    <div class="d-flex align-items-center">
+                      <div class="bg-warning bg-opacity-10 p-3 rounded-circle me-3">
+                        <i class="bi bi-graph-up text-warning"></i>
+                      </div>
+                      <div>
+                        <h5 class="mb-1">Smart Investments</h5>
+                        <p class="text-muted mb-0">Grow your wealth with our investment options</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="alert alert-info mt-4">
+                    <i class="bi bi-info-circle me-2"></i>
+                    Your account will be activated instantly after verification
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+{% endblock %}

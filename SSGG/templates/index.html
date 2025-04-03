@@ -1,0 +1,143 @@
+{% extends "base.html" %}
+
+{% block title %}SSGG Bank LMT - Welcome{% endblock %}
+
+{% block extra_css %}
+<style>
+    .hero-section {
+        background: linear-gradient(135deg, #0d6efd 0%, #0099ff 100%);
+        color: white;
+        padding: 100px 0;
+    }
+    .feature-card {
+        transition: transform 0.3s;
+        border-radius: 15px;
+        overflow: hidden;
+    }
+    .feature-card:hover {
+        transform: translateY(-5px);
+    }
+    .auth-buttons .btn {
+        min-width: 120px;
+        margin: 0 10px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="py-5 text-center">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <h1 class="display-4 fw-bold mb-4">Welcome to SSGG Bank LMT</h1>
+                <p class="lead mb-4">Experience secure and modern banking with our comprehensive financial solutions.</p>
+                {% if not current_user.is_authenticated %}
+                <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+                    <a href="{{ url_for('auth.signup') }}" class="btn btn-primary btn-lg px-4 gap-3">Sign Up</a>
+                    <a href="{{ url_for('auth.login') }}" class="btn btn-outline-secondary btn-lg px-4">Login</a>
+                </div>
+                {% else %}
+                <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+                    <a href="{{ url_for('views.dashboard') }}" class="btn btn-primary btn-lg px-4 gap-3">Go to Dashboard</a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center p-4">
+                        <div class="mb-4">
+                            <i class="bi bi-shield-lock text-primary" style="font-size: 2.5rem;"></i>
+                        </div>
+                        <h3 class="h4">Secure Banking</h3>
+                        <p class="text-muted">Bank with confidence using our state-of-the-art security measures.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center p-4">
+                        <div class="mb-4">
+                            <i class="bi bi-phone text-primary" style="font-size: 2.5rem;"></i>
+                        </div>
+                        <h3 class="h4">Mobile Banking</h3>
+                        <p class="text-muted">Access your accounts anytime, anywhere with our mobile banking app.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center p-4">
+                        <div class="mb-4">
+                            <i class="bi bi-graph-up-arrow text-primary" style="font-size: 2.5rem;"></i>
+                        </div>
+                        <h3 class="h4">Smart Investments</h3>
+                        <p class="text-muted">Grow your wealth with our expert investment solutions.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Services Section -->
+<section class="py-5">
+    <div class="container">
+        <h2 class="text-center mb-5">Our Services</h2>
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-3">
+                <div class="text-center">
+                    <i class="bi bi-credit-card text-primary mb-3" style="font-size: 2rem;"></i>
+                    <h5>Credit Cards</h5>
+                    <p class="text-muted small">Exclusive rewards and benefits</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="text-center">
+                    <i class="bi bi-house-door text-primary mb-3" style="font-size: 2rem;"></i>
+                    <h5>Home Loans</h5>
+                    <p class="text-muted small">Competitive interest rates</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="text-center">
+                    <i class="bi bi-piggy-bank text-primary mb-3" style="font-size: 2rem;"></i>
+                    <h5>Savings</h5>
+                    <p class="text-muted small">High-yield savings accounts</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="text-center">
+                    <i class="bi bi-currency-exchange text-primary mb-3" style="font-size: 2rem;"></i>
+                    <h5>Money Transfer</h5>
+                    <p class="text-muted small">Quick and secure transfers</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-5 bg-primary text-white">
+    <div class="container text-center">
+        <h2 class="mb-4">Ready to get started?</h2>
+        <p class="lead mb-4">Join thousands of satisfied customers who trust SSGG Bank LMT</p>
+        {% if not current_user.is_authenticated %}
+        <a href="{{ url_for('auth.signup') }}" class="btn btn-light btn-lg">Open an Account</a>
+        {% else %}
+        <a href="{{ url_for('views.dashboard') }}" class="btn btn-light btn-lg">Go to Dashboard</a>
+        {% endif %}
+    </div>
+</section>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+{% endblock %}

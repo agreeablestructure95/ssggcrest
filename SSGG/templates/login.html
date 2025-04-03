@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+
+{% block title %}SSGG Bank LMT - Login{% endblock %}
+
+{% block extra_css %}
+<style>
+  .login-container {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  .card {
+    border: none;
+    border-radius: 15px;
+  }
+  .form-control-lg {
+    padding: 1rem 1.25rem;
+  }
+  .btn-lg {
+    padding: 1rem 1.25rem;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Main Content -->
+<main class="py-5">
+  <div class="container login-container">
+    <div class="row justify-content-center">
+      <div class="col-12">
+        <div class="card shadow-lg">
+          <div class="card-body p-5">
+            <div class="row">
+              <!-- Left Side - Login Form -->
+              <div class="col-md-6 border-end">
+                <div class="text-center mb-5">
+                  <i class="bi bi-bank display-1 text-primary mb-4"></i>
+                  <h1 class="h3 mb-3">Welcome Back</h1>
+                  <p class="text-muted">Login to access your account</p>
+                </div>
+
+                {% with messages = get_flashed_messages() %}
+                  {% if messages %}
+                    {% for message in messages %}
+                      <div class="alert alert-danger">{{ message }}</div>
+                    {% endfor %}
+                  {% endif %}
+                {% endwith %}
+
+                <form method="POST" action="{{ url_for('auth.login') }}">
+                  <div class="mb-4">
+                    <label class="form-label">Username</label>
+                    <div class="input-group input-group-lg">
+                      <span class="input-group-text bg-light"><i class="bi bi-person"></i></span>
+                      <input type="text" name="username" class="form-control" placeholder="Enter your username" required>
+                    </div>
+                  </div>
+
+                  <div class="mb-4">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                      <label class="form-label mb-0">Password</label>
+                      <a href="#" class="text-primary small text-decoration-none">Forgot Password?</a>
+                    </div>
+                    <div class="input-group input-group-lg">
+                      <span class="input-group-text bg-light"><i class="bi bi-lock"></i></span>
+                      <input type="password" name="password" class="form-control" placeholder="Enter your password" required>
+                    </div>
+                  </div>
+
+                  <div class="mb-4">
+                    <div class="form-check">
+                      <input type="checkbox" class="form-check-input" id="remember" name="remember">
+                      <label class="form-check-label" for="remember">Remember me</label>
+                    </div>
+                  </div>
+
+                  <div class="d-grid mb-4">
+                    <button type="submit" class="btn btn-primary btn-lg">
+                      <i class="bi bi-box-arrow-in-right me-2"></i>Login
+                    </button>
+                  </div>
+
+                  <p class="text-center mb-0">
+                    Don't have an account? 
+                    <a href="{{ url_for('auth.signup') }}" class="text-primary text-decoration-none">Sign Up</a>
+                  </p>
+                </form>
+              </div>
+
+              <!-- Right Side - Features -->
+              <div class="col-md-6">
+                <div class="ps-md-4">
+                  <h4 class="mb-4">Why Choose SSGG Bank?</h4>
+                  <div class="mb-4">
+                    <div class="d-flex align-items-center mb-3">
+                      <div class="bg-primary bg-opacity-10 p-3 rounded-circle me-3">
+                        <i class="bi bi-shield-check text-primary"></i>
+                      </div>
+                      <div>
+                        <h5 class="mb-1">Secure Banking</h5>
+                        <p class="text-muted mb-0">Advanced security measures to protect your account</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="mb-4">
+                    <div class="d-flex align-items-center mb-3">
+                      <div class="bg-success bg-opacity-10 p-3 rounded-circle me-3">
+                        <i class="bi bi-phone text-success"></i>
+                      </div>
+                      <div>
+                        <h5 class="mb-1">Mobile Banking</h5>
+                        <p class="text-muted mb-0">Access your account anytime, anywhere</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="mb-4">
+                    <div class="d-flex align-items-center">
+                      <div class="bg-warning bg-opacity-10 p-3 rounded-circle me-3">
+                        <i class="bi bi-graph-up text-warning"></i>
+                      </div>
+                      <div>
+                        <h5 class="mb-1">Smart Investments</h5>
+                        <p class="text-muted mb-0">Grow your wealth with our investment options</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+{% endblock %}
